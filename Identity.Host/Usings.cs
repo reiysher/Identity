@@ -3,5 +3,7 @@ global using Identity.Application.Abstractions.Common;
 global using Identity.Host.Extensions;
 global using Identity.Host.Options;
 global using Identity.Infrastructure;
+global using Identity.Infrastructure.Logging;
 global using Microsoft.AspNetCore.Identity;
+global using Serilog;
 global using System.Reflection;
