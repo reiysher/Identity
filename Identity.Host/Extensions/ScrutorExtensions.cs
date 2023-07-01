@@ -6,14 +6,14 @@ public static class ScrutorExtensions
     {
         services.Scan(scan => scan
             .FromAssemblyDependencies(Assembly.GetExecutingAssembly())
-            .AddClasses(classes => classes.AssignableTo<ITransientService>())
-            .AsMatchingInterface()
-            .WithTransientLifetime()
-            .AddClasses(classes => classes.AssignableTo<IScopedService>())
-            .AsMatchingInterface()
-            .WithScopedLifetime()
-            .AddClasses(classes => classes.AssignableTo<ISingletonService>())
-            .AsMatchingInterface()
-            .WithSingletonLifetime());
+                .AddClasses(classes => classes.AssignableTo<ITransientService>())
+                    .AsMatchingInterface()
+                    .WithTransientLifetime()
+                .AddClasses(classes => classes.AssignableTo<IScopedService>())
+                    .AsMatchingInterface()
+                    .WithScopedLifetime()
+                .AddClasses(classes => classes.AssignableTo<ISingletonService>())
+                    .AsMatchingInterface()
+                    .WithSingletonLifetime());
     }
 }

@@ -5,6 +5,8 @@ builder.ConfigureHasherOptions();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.RegisterServices();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
