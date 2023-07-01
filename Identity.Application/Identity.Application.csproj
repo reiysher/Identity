@@ -17,6 +17,7 @@
   <ItemGroup>
     <Folder Include="Features\Roles\" />
     <Folder Include="Features\Users\" />
+    <Folder Include="Settings\" />
   </ItemGroup>
 
 </Project>
