@@ -30,7 +30,11 @@ internal static class Configure
             });
 
             options.UseSnakeCaseNamingConvention();
+
+            options.UseOpenIddict();
         });
+
+        services.RegisterServices();
 
         return services;
     }
@@ -49,5 +53,14 @@ internal static class Configure
         {
             await seeder.SeedAsync(dbContext, cancellationToken);
         }
+    }
+
+    private static void RegisterServices(this IServiceCollection services)
+    {
+        services.Scan(scan => scan
+            .FromAssemblyOf<ISeeder>()
+                .AddClasses(classes => classes.AssignableTo<ISeeder>())
+                    .AsImplementedInterfaces()
+                    .WithScopedLifetime());
     }
 }

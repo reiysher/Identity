@@ -1,5 +1,6 @@
 ﻿using Identity.Infrastructure.Auth;
 using Identity.Infrastructure.Logging;
+using Identity.Infrastructure.OpenIddict;
 using Identity.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,7 @@ public static class Configure
     {
         return services
             .AddApplicationIdentity(configuration)
+            .AddOpenIddictPreconfigured()
             .AddPersistence();
     }
 
