@@ -1,6 +1,4 @@
-﻿using Identity.Infrastructure.Persistence.Contexts;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using OpenIddict.Abstractions;
 
 namespace Identity.Infrastructure.Persistence.Initialization;
@@ -8,41 +6,37 @@ namespace Identity.Infrastructure.Persistence.Initialization;
 internal class ScopesSeeder : ISeeder
 {
     private readonly ILogger<ScopesSeeder> _logger;
-    private readonly IServiceProvider _serviceProvider;
-    private readonly ApplicationDbContext _dbContext;
+    private readonly IOpenIddictScopeManager _scopeManager;
 
     public int Order => 10;
 
     public ScopesSeeder(ILogger<ScopesSeeder> logger,
-        IServiceProvider serviceProvider,
-        ApplicationDbContext dbContext)
+        IOpenIddictScopeManager scopeManager)
     {
         _logger = logger;
-        _serviceProvider = serviceProvider;
-        _dbContext = dbContext;
+        _scopeManager = scopeManager;
+
     }
 
-    public async Task SeedAsync(ApplicationDbContext dbContext, CancellationToken cancellationToken)
+    public async Task SeedAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Seeding scopes...");
 
-        await using var scope = _serviceProvider.CreateAsyncScope();
-        var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictScopeManager>();
-
-        var apiScope = await manager.FindByNameAsync("api1", cancellationToken);
+        var apiScope = await _scopeManager.FindByNameAsync("identity_api", cancellationToken);
 
         if (apiScope != null)
         {
-            await manager.DeleteAsync(apiScope, cancellationToken);
+            await _scopeManager.DeleteAsync(apiScope, cancellationToken);
         }
 
-        await manager.CreateAsync(new OpenIddictScopeDescriptor
+        await _scopeManager.CreateAsync(new OpenIddictScopeDescriptor
         {
-            DisplayName = "Api scope",
-            Name = "api1",
+            DisplayName = "Identity api scope",
+            Name = "identity_api",
             Resources =
                 {
-                    "resource_server_1"
+                    "users",
+                    "roles"
                 }
         }, cancellationToken);
     }

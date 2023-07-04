@@ -7,5 +7,5 @@ internal interface ISeeder : IScopedService
 {
     int Order { get; }
 
-    Task SeedAsync(ApplicationDbContext dbContext, CancellationToken cancellationToken);
+    Task SeedAsync(CancellationToken cancellationToken);
 }

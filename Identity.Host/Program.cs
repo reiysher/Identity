@@ -6,8 +6,9 @@ try
     var builder = WebApplication.CreateBuilder(args);
 
     builder.EnableLogger();
-
     builder.ConfigureHasherOptions();
+
+    builder.Services.AddControllersWithViews();
 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -19,15 +20,22 @@ try
 
     var app = builder.Build();
 
+    await app.Services.InitializeDatabase();
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
     }
 
+    app.UseRouting();
     app.UseHttpsRedirection();
 
-    await app.Services.InitializeDatabase();
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.MapDefaultControllerRoute();
+    app.MapControllers();
 
     app.Run();
 }

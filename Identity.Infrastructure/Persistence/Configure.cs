@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Identity.Infrastructure.Persistence.Initialization;
+using Identity.Domain.Entities;
 
 namespace Identity.Infrastructure.Persistence;
 
@@ -31,7 +32,7 @@ internal static class Configure
 
             options.UseSnakeCaseNamingConvention();
 
-            options.UseOpenIddict();
+            options.UseOpenIddict<CustomApplication, CustomAuthorization, CustomScope, CustomToken, Guid>();
         });
 
         services.RegisterServices();
@@ -51,7 +52,7 @@ internal static class Configure
 
         foreach (var seeder in seeders)
         {
-            await seeder.SeedAsync(dbContext, cancellationToken);
+            await seeder.SeedAsync(cancellationToken);
         }
     }
 

@@ -4,6 +4,8 @@ global using Identity.Host.Extensions;
 global using Identity.Host.Options;
 global using Identity.Infrastructure;
 global using Identity.Infrastructure.Logging;
+global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Mvc;
 global using Serilog;
 global using System.Reflection;
